@@ -9,26 +9,29 @@ import java.util.List;
  */
 public class EnergyWorld extends World
 {
-    Timer timer = new Timer();
+    private Status status;
+    private Timer timer = new Timer();
+    private final int MAX_FOOD = 3;
+    private final int MAX_ENEMY = 3;
+    private Spawner spawner;
     
-    public EnergyWorld()
-    {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+    public EnergyWorld(){    
         super(600, 600, 1);
+    }
+    
+    public EnergyWorld(Status status){
+        this();
+        this.status = status;
+        spawner = new Spawner(this, status);
+        addObject(status, getWidth()/2, getHeight()/2);
         prepare();
-        
+        firstSpawn();
     }
-
+    
     public void act(){
-        //spawnApple();
-        //spawnBanana();
-        //spawnPapaya();
+        status.display();
     }
 
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
     private void prepare()
     {
         Wall wall = new Wall();
@@ -41,14 +44,6 @@ public class EnergyWorld extends World
         addObject(wall3,26,431);
         Wall wall4 = new Wall();
         addObject(wall4,76,430);
-        Snake snake = new Snake();
-        addObject(snake,433,425);
-        Snake snake2 = new Snake();
-        addObject(snake2,342,278);
-        Cat cat = new Cat();
-        addObject(cat,511,204);
-        Cat cat2 = new Cat();
-        addObject(cat2,261,215);
         Wall wall5 = new Wall();
         addObject(wall5,494,352);
         Wall wall6 = new Wall();
@@ -57,42 +52,25 @@ public class EnergyWorld extends World
         addObject(wall7,111,273);
         Wall wall8 = new Wall();
         addObject(wall8,285,485);
-        Bird bird = new Bird();
-        addObject(bird,224,97);
         Tree tree = new Tree();
         addObject(tree,513,548);
     }
-
-    public void spawnApple(){
-        randomSpawn(new Apple());
-    }
-    public void spawnBanana(){
-        randomSpawn(new Banana());
-    }
-    public void spawnPapaya(){
-        randomSpawn(new Papaya());
-    }
-    private void randomSpawn(Actor act){
-       while(true){
-            int xPos = Greenfoot.getRandomNumber(getWidth());
-            int yPos = Greenfoot.getRandomNumber(getHeight());
-            if(isValidLocation(xPos, yPos)){
-                addObject(act, xPos, yPos);
-                return;
-            }
-       }
-    }
-    private boolean isValidLocation(int x, int y){
-        int spawnRange = 10; //Jarak toleransi antar object 
-        //Pengecekan object apa saja yang berada pada posisi x dan y
-        List<Actor> actors = getObjectsAt(x, y, null);
-        actors.addAll(getObjectsAt(x+spawnRange, y+spawnRange, null));
-        actors.addAll(getObjectsAt(x-spawnRange, y-spawnRange, null));
-        actors.addAll(getObjectsAt(x+spawnRange, y-spawnRange, null));
-        actors.addAll(getObjectsAt(x-spawnRange, y+spawnRange, null));
-        if(actors.isEmpty()){
-            return true;
+    
+    private void firstSpawn(){
+        //Spawning food
+        for(int i = 0 ; i < MAX_FOOD ; i++){
+            spawner.spawnApple();
+            spawner.spawnBanana();
+            spawner.spawnPapaya();
         }
-        return false;
+        //Spawning enemy
+        for(int i = 0 ; i < MAX_ENEMY ; i++){
+            spawner.spawnSnake();
+        }
+        spawner.spawnBird();
+    }
+    
+    public Status getStatus(){
+        return status;
     }
 }

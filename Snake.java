@@ -6,12 +6,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Snake extends Predator
-{
-    public Snake(){
-        super();
+public class Snake extends Predator{
+    private final int SPEED = 3;
+    
+    public Snake(EnergyWorld world){
+        super(world);
     }
+    
     public void act(){
-        behaviour(3);
-    }    
+        behaviour(SPEED);
+    }
 }

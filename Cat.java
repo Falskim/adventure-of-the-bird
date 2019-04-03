@@ -6,13 +6,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Cat extends Predator
-{
-    public Cat(){
-        super();
+public class Cat extends Predator{
+    private final int SPEED = 5;
+    
+    public Cat(World world){
+        super(world);
     }
     public void act() 
     {
-        behaviour(5);
+        behaviour(SPEED);
     }    
 }
