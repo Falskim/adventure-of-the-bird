@@ -22,7 +22,7 @@ public class EnergyWorld extends World
     public EnergyWorld(Status status){
         this();
         this.status = status;
-        spawner = new Spawner(this, status);
+        spawner = new Spawner((World)this);
         addObject(status, getWidth()/2, getHeight()/2);
         prepare();
         firstSpawn();
@@ -67,7 +67,7 @@ public class EnergyWorld extends World
         for(int i = 0 ; i < MAX_ENEMY ; i++){
             spawner.spawnSnake();
         }
-        spawner.spawnBird();
+        spawner.spawnBird(status, true);
     }
     
     public Status getStatus(){

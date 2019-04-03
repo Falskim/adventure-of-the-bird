@@ -2,80 +2,61 @@ import greenfoot.*;
 import java.util.List;
 
 public class Spawner{
-    private EnergyWorld energyWorld;
-    private BirdWorld birdWorld;
     private World world;
     private boolean isEnergyWorld;
     private Status status;
 
     public Spawner(){
     }
+    public Spawner(World world){
+        this.world = world;
+    }
     public Spawner(EnergyWorld world){
-        energyWorld = world;
         this.world = (World)world;
         isEnergyWorld = true;
     }
     public Spawner(BirdWorld world){
-        birdWorld = world;
         this.world = (World)world;
         isEnergyWorld = false;
     }
-    public Spawner(EnergyWorld world, Status status){
-        energyWorld = world;
-        this.world = (World)world;
-        isEnergyWorld = true;
-        this.status = status;
-    }
 
-    public Spawner(BirdWorld world, Status status){
-        birdWorld = world;
-        this.world = (World)world;
-        isEnergyWorld = false;
-        this.status = status;
-    }
-
-    public void spawnBird(){
-        if(isEnergyWorld) 
-            randomSpawn(new Bird(energyWorld, status));
-        else
-            randomSpawn(new Bird(birdWorld, status));
+    public void spawnBird(Status status, boolean isEnergyWorld){
+        randomSpawn(new Bird(world, status, isEnergyWorld));
     }
 
     public void spawnSnake(){
-        if(isEnergyWorld) randomSpawn(new Snake(energyWorld));
+        randomSpawn(new Snake(world));
     }
 
     public void spawnApple(){
-        if(isEnergyWorld) randomSpawn(new Apple(energyWorld));
+        randomSpawn(new Apple(world));
     }
 
     public void spawnBanana(){
-        if(isEnergyWorld) randomSpawn(new Banana(energyWorld));
+        randomSpawn(new Banana(world));
     }
 
     public void spawnPapaya(){
-        if(isEnergyWorld) randomSpawn(new Papaya(energyWorld));
+        randomSpawn(new Papaya(world));
     }
     
     public void spawnCat(){
-        if(!isEnergyWorld) randomSpawn(new Cat(birdWorld));
+        randomSpawn(new Cat(world));
     }
     
     private void randomSpawn(Actor act){
-        int xPos;
-        int yPos;
-        while(true){
-            xPos = Greenfoot.getRandomNumber(world.getWidth());
-            yPos = Greenfoot.getRandomNumber(world.getHeight());
-            if(isValidLocation(act, xPos, yPos)){
+       while(true){
+            int xPos = Greenfoot.getRandomNumber(world.getWidth());
+            int yPos = Greenfoot.getRandomNumber(world.getHeight());
+            if(isValidLocation(xPos, yPos)){
                 world.addObject(act, xPos, yPos);
                 return;
             }
         }
     }
 
-    public boolean isValidLocation(Actor act, int x, int y){
-        int spawnRange = 20; //Jarak toleransi antar object 
+    public boolean isValidLocation(int x, int y){
+        int spawnRange = 30; //Jarak toleransi antar object 
         //Pengecekan object apa saja yang berada pada posisi x dan y
         List<Actor> actors = world.getObjectsAt(x, y, null);
         actors.addAll(world.getObjectsAt(x+spawnRange, y+spawnRange, null));

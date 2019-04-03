@@ -15,7 +15,7 @@ public class Food extends Actor{
         this.world = world;
         this.energyValue = energyValue;
         this.respawnDelay = respawnDelay;
-        spawner = new Spawner((EnergyWorld)world);
+        this.spawner = new Spawner(world);
         timer.markTimer();
     }
     
@@ -31,7 +31,7 @@ public class Food extends Actor{
        while(true){
             int xPos = Greenfoot.getRandomNumber(world.getWidth());
             int yPos = Greenfoot.getRandomNumber(world.getHeight());
-            if(spawner.isValidLocation(this, xPos, yPos)){
+            if(spawner.isValidLocation(xPos, yPos)){
                 setLocation(xPos, yPos);
                 return;
             }

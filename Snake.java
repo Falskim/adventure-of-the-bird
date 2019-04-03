@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Snake extends Predator{
     private final int SPEED = 3;
     
-    public Snake(EnergyWorld world){
+    public Snake(World world){
         super(world);
     }
     

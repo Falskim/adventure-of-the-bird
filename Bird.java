@@ -11,19 +11,16 @@ public class Bird extends Actor{
     private int xSpawnPosition;
     private int ySpawnPosition;
     private Status status;
+    private World world;
+    private boolean isEnergyWorld;
     private boolean hasSpawnPosition = false;
-    private EnergyWorld energyWorld;
-    private BirdWorld birdWorld;
     private final int FLY_THRESHOLD = 5;
     private int flyCounter = 0;
     
-    public Bird(EnergyWorld world, Status status){
-        energyWorld = world;
+    public Bird(World world, Status status, boolean isEnergyWorld){
+        this.world = world;
         this.status = status;
-    }
-    public Bird(BirdWorld world, Status status){
-        birdWorld = world;
-        this.status = status;
+        this.isEnergyWorld = isEnergyWorld;
     }
     
     public void act(){
@@ -63,12 +60,11 @@ public class Bird extends Actor{
     }
 
     private void changeWorld(){
-        if(energyWorld == null ){
-            Greenfoot.setWorld(new EnergyWorld(status));
-        }
-        if(birdWorld == null ){
+        if(isEnergyWorld){
             Greenfoot.setWorld(new BirdWorld(status));
+            return;
         }
+        Greenfoot.setWorld(new EnergyWorld(status));
     }
     
     private void checkCollision(){
