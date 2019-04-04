@@ -14,7 +14,7 @@ public class Bird extends Actor{
     private World world;
     private boolean isEnergyWorld;
     private boolean hasSpawnPosition = false;
-    private final int FLY_THRESHOLD = 5;
+    private final int FLY_THRESHOLD = 7;
     private int flyCounter = 0;
     
     public Bird(World world, Status status, boolean isEnergyWorld){
@@ -61,16 +61,21 @@ public class Bird extends Actor{
 
     private void changeWorld(){
         if(isEnergyWorld){
+            ((EnergyWorld)world).stopMusic();
             Greenfoot.setWorld(new BirdWorld(status));
             return;
+        }else{
+            ((BirdWorld)world).stopMusic();
+            Greenfoot.setWorld(new EnergyWorld(status));
+            return;
         }
-        Greenfoot.setWorld(new EnergyWorld(status));
     }
     
     private void checkCollision(){
         Food food = (Food)getOneIntersectingObject(Food.class);
         if(food != null){
             status.increaseEnergy(food.energyValue);
+            status.increaseScore(food.energyValue);
         }
         if(isTouching(Wall.class)){
             respawn();

@@ -7,10 +7,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Snake extends Predator{
-    private final int SPEED = 3;
+    private static final int SPEED = 3;
+    private static final int TURN_DURATION = 1000;
     
     public Snake(World world){
-        super(world);
+        super(world, TURN_DURATION);
     }
     
     public void act(){

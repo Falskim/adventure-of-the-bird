@@ -10,10 +10,11 @@ public class Predator extends Actor
 {
     public World world;
     private Timer timer = new Timer();
-    private int turnDuration = 1000; //Toleransi timer, dalam miliseconds
+    private int turnDuration; //Toleransi timer, dalam miliseconds
     
-    public Predator(World world){
+    public Predator(World world, int turnDuration){
         this.world = world;
+        this.turnDuration = turnDuration;
         timer.markTimer();
     }
     

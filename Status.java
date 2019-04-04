@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Status extends Actor
 {
+    private final int yPos = 15;
     private int score;
     private int lives;
     private int energy;
@@ -21,9 +22,9 @@ public class Status extends Actor
     }
     
     public void display(){
-        getWorld().showText("Score : " + score, 50, 20);
-        getWorld().showText("Energy : " + energy, getWorld().getWidth()/2, 20);
-        getWorld().showText("Lives : " + lives, getWorld().getWidth() - 50, 20);
+        getWorld().showText("Score : " + score, 50, yPos);
+        getWorld().showText("Energy : " + energy, getWorld().getWidth()/2, yPos);
+        getWorld().showText("Lives : " + lives, getWorld().getWidth() - 50, yPos);
     }
     
     /*

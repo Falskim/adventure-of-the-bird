@@ -9,14 +9,17 @@ import java.util.List;
  */
 public class BirdWorld extends World
 {
-    private Status status;
-    private Spawner spawner;
     private Timer timer = new Timer();
     private final int MAX_FOOD = 3;
     private final int MAX_ENEMY = 3;
+    private Status status;
+    private Spawner spawner;
+    private final GreenfootSound bgm = 
+                    new GreenfootSound("The Doll Maker of Bucharest.mp3");
     
     public BirdWorld(){
         super(800, 600, 1);
+        if(status == null) status = new Status();
     }
     
     public BirdWorld(Status status){
@@ -26,6 +29,7 @@ public class BirdWorld extends World
         addObject(status, getWidth()/2, getHeight()/2);
         prepare();
         firstSpawn();
+        bgm.playLoop();
     }
     
     private void prepare(){
@@ -45,7 +49,7 @@ public class BirdWorld extends World
         status.display();
     }
     
-    public Status getStatus(){
-        return status;
+    public void stopMusic(){
+        bgm.stop();
     }
 }

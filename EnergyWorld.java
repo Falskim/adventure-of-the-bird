@@ -14,9 +14,12 @@ public class EnergyWorld extends World
     private final int MAX_FOOD = 3;
     private final int MAX_ENEMY = 3;
     private Spawner spawner;
+    private final GreenfootSound bgm = 
+                    new GreenfootSound("Lullaby of Deserted Hell.mp3");
     
     public EnergyWorld(){    
         super(600, 600, 1);
+        if(status == null) status = new Status();
     }
     
     public EnergyWorld(Status status){
@@ -26,6 +29,7 @@ public class EnergyWorld extends World
         addObject(status, getWidth()/2, getHeight()/2);
         prepare();
         firstSpawn();
+        bgm.playLoop();
     }
     
     public void act(){
@@ -70,7 +74,7 @@ public class EnergyWorld extends World
         spawner.spawnBird(status, true);
     }
     
-    public Status getStatus(){
-        return status;
+    public void stopMusic(){
+        bgm.stop();
     }
 }
