@@ -8,59 +8,86 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Status extends Actor
 {
-    private final int yPos = 15;
+    private final int yPos = 20;
     private int score;
     private int lives;
     private int energy;
     private int wormEaten;
-    
+    private boolean hasFirstDisplayed = false;
+    private Lives live = new Lives();
+    private Energy energyBar = new Energy();
+
     public Status(){
         score = 0;
         lives = 6;
         energy = 100;
         wormEaten = 0;
     }
-    
+
     public void display(){
         getWorld().showText("Score : " + score, 50, yPos);
-        getWorld().showText("Energy : " + energy, getWorld().getWidth()/2, yPos);
-        getWorld().showText("Lives : " + lives, getWorld().getWidth() - 50, yPos);
+        getWorld().showText("Energy : ", (getWorld().getWidth()/2) - 75, yPos);
+        getWorld().showText("Lives : " , getWorld().getWidth() - 130, yPos);
+        getWorld().showText("Worm Eaten : " + wormEaten, getWorld().getWidth()/2, 
+            getWorld().getHeight() - yPos);
+        if(!hasFirstDisplayed){
+            firstDisplay();
+            hasFirstDisplayed = true;
+        }
     }
-    
+
+    public void firstDisplay(){
+        getWorld().addObject(live, getWorld().getWidth() - 50, yPos);
+        getWorld().addObject(energyBar, (getWorld().getWidth()/2) + 30, yPos);
+        live.updateLives(lives);
+        energyBar.updateEnergy(energy);
+    }
+
+    public boolean isLose(){
+        return lives <= 0;
+    }
+
     /*
      * Score
      */
     public void increaseScore(int score){
         this.score += score;
     }
+
     public int getScore(){
         return score;
     }
-    
+
     /*
      * Lives
      */
     public void decreaseLives(int damage){
         lives -= damage;
+        live.updateLives(lives);
     }
+
     public int getLives(){
         return lives;
     }
-    
+
     /*
      * Energy
      */
     public void increaseEnergy(int value){
         energy += value;
         if(energy > 100) energy = 100;
+        energyBar.updateEnergy(energy);
     }
+
     public void decreaseEnergy(){
         energy--;
+        energyBar.updateEnergy(energy);
     }
+
     public int getEnergy(){
         return energy;
     }
-    
+
     /*
      * Worm
      */

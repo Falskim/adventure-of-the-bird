@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bird extends Actor{
     //General Attribute
-    private int speed = 6;
+    private int speed = 3;
     private Status status;
     private World world;
     private boolean isEnergyWorld;
@@ -20,7 +20,7 @@ public class Bird extends Actor{
     
     //Fly related
     private int flyCounter = 0;
-    private final int FLY_THRESHOLD = 8;
+    private final int FLY_THRESHOLD = 5;
     
     //Animation related
     private GreenfootImage[][] sprites;
@@ -41,6 +41,11 @@ public class Bird extends Actor{
     public void act(){
         if(world == null) return;
         if(!hasSpawnPosition) setSpawnPosition();
+        if(status.isLose()){
+            setImage(new GreenfootImage("gameover.png"));
+            setLocation(world.getWidth()/2, world.getHeight()/2);
+            return;
+        }
         movement();
         animate();
         checkCollision();
@@ -127,6 +132,7 @@ public class Bird extends Actor{
         if(food != null){
             status.increaseEnergy(food.energyValue);
             status.increaseScore(food.energyValue);
+            if(food.isWorm()) status.increaseWormEaten();
         }
         if(isTouching(Wall.class)){
             respawn();

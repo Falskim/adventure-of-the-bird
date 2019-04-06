@@ -1,7 +1,7 @@
 # Adventure of the bird
 > Tugas UTS Greenfoot Mata Kuliah Pemrograman Berorientasi Objek
 
-## Skenario
+## Story (Indonesian)
 
 Dewi, adalah seekor burung Blue Jay yang memiliki 3 ekor anak. Suatu hari anak-anaknya
 menjerit kelaparan, dan Dewi pun harus mencari makanan untuk masing-masing anaknya.
@@ -28,14 +28,46 @@ pohon.
 Setelah Dewi berhasil mengumpulkan cacing untuk semua anak-anaknya, maka dia harus
 kembali ke sarang untuk memberi makan ketiga anaknya
 
+## How To use
+
+  Clone this repo by using :
+  ```
+  git clone https://github.com/Falskim/adventure-of-the-bird.git
+  ```
+  
+  Or you can download it as zip file (the button is on top right _clone and download_ ), then extract it using archive opener like winrar or 7zip.
+  
+  
+  After that open this file
+  > project.greenfoot
+  
+  by using [Greenfoot](https://www.greenfoot.org/download)
+  
+  
+  After project is opened, on the right side find and right-click on SubWorld
+  > StartMenu
+  
+  
+  Then left-click on
+  
+  > new StartMenu()
+  
+  
+  
+  Wait until the world is loaded, then click **RUN** button at the bottom of Greenfoot. 
+  Finally you can click on the **Start** button to start the game
+  
+  
+  Goodluck
+  
 ## Status
 
 - [x] Main Actor
-- [x] Basic Mechanism (Spawn, Movement, Eat)
-- [x] Score, Health, Energy (Text Based)
+- [x] Basic Mechanism (Spawn, Movement, Collision)
+- [x] Score, Health, Energy
 - [x] Background Music (Special Thanks to ZUN for Touhou Music)
 - [ ] Spite and Animation
 - [ ] Sound Effect
 - [ ] Win and Lose Condition
-- [ ] Map Layout
+- [x] Map Layout
 - [ ] Difficulty (?) 

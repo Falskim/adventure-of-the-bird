@@ -11,18 +11,23 @@ public class EnergyWorld extends World
 {
     private Status status;
     private Timer timer = new Timer();
-    private final int MAX_FOOD = 3;
-    private final int MAX_ENEMY = 3;
+    private final static int MAX_FOOD = 3;
+    private final static int MAX_ENEMY = 3;
     private Spawner spawner;
-    private final GreenfootSound bgm = 
+    private final static GreenfootSound bgm = 
                     new GreenfootSound("Lullaby of Deserted Hell.mp3");
+    private boolean hasStatusDisplayed = false;
     /*
      * Ukuran dunia 600 x 600, dan ukuran Wall 50, sehingga
      * 600/50 = 12 baris dan kolom
+     * 
+     * 0 = kosong
+     * 1 = tembok
+     * 2 = pohon
      */
     int[][] layout = {
         {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}, //1
-        {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //2
+        {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0}, //2
         {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //3
         {1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, //4
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1}, //5
@@ -39,7 +44,7 @@ public class EnergyWorld extends World
         {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1}, //16
         {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0}, //17
         {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //18
-        {1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, //19
+        {1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, //19
         {1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1}}; //20
        //1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
     
@@ -58,6 +63,13 @@ public class EnergyWorld extends World
         firstSpawn();
     }
     
+    public void act(){
+        if(!hasStatusDisplayed){
+            status.firstDisplay();
+            hasStatusDisplayed = true;
+        }
+        status.display();
+    }
     private void createWallLayout(){
         final int WALL_SIZE = 30;
         int xPos;
@@ -68,14 +80,13 @@ public class EnergyWorld extends World
                 if(layout[i][j] == 1){
                     addObject(new EnergyWall(), xPos, yPos);
                 }
+                if(layout[i][j] == 2){
+                    addObject(new Tree(), xPos, yPos);
+                }
                 xPos += WALL_SIZE;
             }
             yPos += WALL_SIZE;
         }
-    }
-    
-    public void act(){
-        status.display();
     }
 
     private void firstSpawn(){
@@ -88,7 +99,6 @@ public class EnergyWorld extends World
         //Spawning enemy
         for(int i = 0 ; i < MAX_ENEMY ; i++){
             spawner.spawnSnake();
-            spawner.spawnCat();
         }
         spawner.spawnBird(status, true);
     }

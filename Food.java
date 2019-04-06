@@ -1,12 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 public class Food extends Actor{
     
     private Timer timer = new Timer();
-    private Spawner spawner;
     public World world;
     public int energyValue;
     public int respawnDelay;
+    private boolean isWorm = false;
     
     public Food(){
     }
@@ -14,8 +15,8 @@ public class Food extends Actor{
     public Food(World world, int energyValue, int respawnDelay){
         this.world = world;
         this.energyValue = energyValue;
+        if(energyValue == 0) isWorm = true;
         this.respawnDelay = respawnDelay;
-        this.spawner = new Spawner(world);
         timer.markTimer();
     }
     
@@ -32,7 +33,7 @@ public class Food extends Actor{
        while(true){
             int xPos = Greenfoot.getRandomNumber(world.getWidth());
             int yPos = Greenfoot.getRandomNumber(world.getHeight());
-            if(spawner.isValidLocation(xPos, yPos)){
+            if(isValidLocation(xPos, yPos)){
                 setLocation(xPos, yPos);
                 return;
             }
@@ -48,5 +49,24 @@ public class Food extends Actor{
             randomLocation();
             return;
         }
+    }
+    
+    public boolean isWorm(){
+        return isWorm;
+    }
+    
+    private boolean isValidLocation(int x, int y){
+        int spawnRange = 15; //Jarak toleransi antar object 
+        //Pengecekan object apa saja yang berada pada posisi x dan y
+        List<Actor> actors = world.getObjectsAt(x, y, null);
+        actors.addAll(world.getObjectsAt(x+spawnRange, y+spawnRange, null));
+        actors.addAll(world.getObjectsAt(x-spawnRange, y-spawnRange, null));
+        actors.addAll(world.getObjectsAt(x+spawnRange, y-spawnRange, null));
+        actors.addAll(world.getObjectsAt(x-spawnRange, y+spawnRange, null));
+        actors.addAll(world.getObjectsAt(x+spawnRange, y, null));
+        actors.addAll(world.getObjectsAt(x-spawnRange, y, null));
+        actors.addAll(world.getObjectsAt(x, y-spawnRange, null));
+        actors.addAll(world.getObjectsAt(x, y+spawnRange, null));
+        return actors.isEmpty();
     }
 }

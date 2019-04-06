@@ -44,6 +44,10 @@ public class Spawner{
         randomSpawn(new Cat(world));
     }
     
+    public void spawnWorm(){
+        randomSpawn(new Worm(world));
+    }
+    
     private void randomSpawn(Actor act){
        while(true){
             int xPos = Greenfoot.getRandomNumber(world.getWidth());
@@ -55,7 +59,7 @@ public class Spawner{
         }
     }
 
-    public boolean isValidLocation(int x, int y){
+    private boolean isValidLocation(int x, int y){
         int spawnRange = 30; //Jarak toleransi antar object 
         //Pengecekan object apa saja yang berada pada posisi x dan y
         List<Actor> actors = world.getObjectsAt(x, y, null);

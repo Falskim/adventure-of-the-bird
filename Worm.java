@@ -8,12 +8,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Worm extends Food
 {
-    /**
-     * Act - do whatever the Worm wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
-    }    
+    private static final int RESPAWN_DELAY = 5000; //milisecond
+    private static final int ENERGY = 0;
+    
+    public Worm(){
+    }
+    public Worm(World world){
+        super(world, ENERGY, RESPAWN_DELAY);
+    }
+    public void act(){
+        behavior();
+    }
 }

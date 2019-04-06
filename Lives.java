@@ -8,42 +8,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Lives extends Actor
 {
-    private GreenfootImage fullHeart;
-    private GreenfootImage halfHeart;
-    private int x;
-    private int y;
-    private int lives;
+    private GreenfootImage full = new GreenfootImage("heartfull.png");
+    private GreenfootImage half = new GreenfootImage("hearthalf.png");
+    private GreenfootImage container;
     
     public Lives(){
-        fullHeart = new GreenfootImage("lives_full.png");
-        halfHeart = new GreenfootImage("lives_half.png");
-        x = 400;
-        y = 50;
-        lives = 6;
     }
-    
-    public void hitWall(){
-        lives =- 1;
-    }
-    
-    public void hitCat(){
-        lives =- 2;
-    }
-    
-    public int getLives(){
-        return lives;
-    }
-    
-    public void displayLives(){
-        int totalFullHeart = lives/2;
-        boolean hasHalfHeart = (lives%2 == 1);
-        int startDrawingPosition = x;
-        
-        for(int i = 0 ; i < totalFullHeart ; i++){
-            
+    public void updateLives(int lives){
+        int x = 13;
+        int y = 3;
+        container = new GreenfootImage("livescontainer.png");
+        for(int i = 0 ; i < lives/2 ; i++){
+            container.drawImage(full, x , y);
+            x += 25;
         }
-        for(int i = 0 ; i < totalFullHeart ; i++){
-        
+        if(lives%2 == 1){
+            container.drawImage(half, x, y);
         }
+        setImage(container);
     }
 }
