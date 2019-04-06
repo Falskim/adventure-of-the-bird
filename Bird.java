@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bird extends Actor{
     //General Attribute
-    private int speed = 3;
+    private int speed = 5;
     private Status status;
     private World world;
     private boolean isEnergyWorld;
@@ -20,7 +20,7 @@ public class Bird extends Actor{
     
     //Fly related
     private int flyCounter = 0;
-    private final int FLY_THRESHOLD = 5;
+    private final int FLY_THRESHOLD = 8;
     
     //Animation related
     private GreenfootImage[][] sprites;
@@ -129,18 +129,20 @@ public class Bird extends Actor{
     
     private void checkCollision(){
         Food food = (Food)getOneIntersectingObject(Food.class);
+        Predator predator = (Predator)getOneIntersectingObject(Predator.class);
         if(food != null){
             status.increaseEnergy(food.energyValue);
             status.increaseScore(food.energyValue);
             if(food.isWorm()) status.increaseWormEaten();
         }
+        if(predator != null){
+            predator.respawn();
+            respawn();
+            status.decreaseLives(2);
+        }
         if(isTouching(Wall.class)){
             respawn();
             status.decreaseLives(1);
-        }
-        if(isTouching(Predator.class)){
-            respawn();
-            status.decreaseLives(2);
         }
         if(isTouching(Tree.class)){
             changeWorld();

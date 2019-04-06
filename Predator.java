@@ -54,7 +54,7 @@ public class Predator extends Actor
             collideCounter++;
             turnTimer.markTimer();
         }
-        if(collideCounter > collideThreshold || isTouching(Bird.class)){
+        if(collideCounter > collideThreshold){
             respawn();
         }
         animate();
@@ -66,7 +66,7 @@ public class Predator extends Actor
         hasSpawnPosition = true;
     }
     
-    private void respawn(){
+    public void respawn(){
         setLocation(xSpawnPosition, ySpawnPosition);
     }
     public void movement(int speed){
