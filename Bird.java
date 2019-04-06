@@ -36,7 +36,7 @@ public class Bird extends Actor{
         this.status = status;
         this.isEnergyWorld = isEnergyWorld;
         if(isEnergyWorld){
-            flyThreshold *= 2;
+            flyThreshold *= 3;
         }
         prepareImage();
     }

@@ -43,11 +43,11 @@ public class Food extends Actor{
     private void checkCollision(){
         if(isTouching(Bird.class)){
             randomLocation();
-            return;
+            timer.markTimer();
         }
         if(isTouching(Snake.class)){
             randomLocation();
-            return;
+            timer.markTimer();
         }
     }
     

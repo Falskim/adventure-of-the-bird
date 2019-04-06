@@ -10,14 +10,16 @@ public class Status extends Actor
 {
     private final int yPos = 20;
     private int score;
+    private int scoreLivesBonus;
     private int lives;
     private int energy;
     private int wormEaten;
     private final int WORM_REQUIRED = 9;
+    private final int SCORE_FOR_LIVES = 50;
     private boolean hasFirstDisplayed = false;
     private Lives live = new Lives();
     private Energy energyBar = new Energy();
-
+    
     public Status(){
         score = 0;
         lives = 6;
@@ -58,12 +60,13 @@ public class Status extends Actor
      */
     public void increaseScore(int score){
         this.score += score;
+        this.scoreLivesBonus += score;
+        if(scoreLivesBonus/SCORE_FOR_LIVES > 0){
+            scoreLivesBonus -= SCORE_FOR_LIVES;
+            increaseLives(2);
+        }
     }
-
-    public int getScore(){
-        return score;
-    }
-
+    
     /*
      * Lives
      */
@@ -71,11 +74,14 @@ public class Status extends Actor
         lives -= damage;
         live.updateLives(lives);
     }
-
-    public int getLives(){
-        return lives;
+    private void increaseLives(int ammount){
+        lives += ammount;
+        if(lives > 6){
+            lives = 6;
+            live.updateLives(lives);
+        }
     }
-
+    
     /*
      * Energy
      */
