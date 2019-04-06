@@ -71,4 +71,4 @@ kembali ke sarang untuk memberi makan ketiga anaknya
 - [x] Win and Lose Condition
 - [x] Map Layout
 - [ ] Start Menu Title Screen
-- [ ] Difficulty (?) 
+- [x] DarkSoul Mode 

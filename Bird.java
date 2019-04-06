@@ -53,6 +53,11 @@ public class Bird extends Actor{
         if(status.isLose()){
             if(status.isDarksoulMode){
                 darksoulLose();
+                if(isEnergyWorld){
+                    ((EnergyWorld)world).stopMusic();
+                }else{
+                    ((BirdWorld)world).stopMusic();
+                }
             }
             setImage(lose);
             setLocation(world.getWidth()/2, world.getHeight()/2);
