@@ -7,7 +7,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Cat extends Predator{
-    private static final int SPEED = 4;
+    private static final int SPEED = 3;
     private static final int TURN_DURATION = 1500;
     private static final int TOTAL_SPRITE = 3;
     

@@ -8,22 +8,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class StartMenu extends World
 {
-
-    public StartMenu()
-    {    
+    private boolean isMusicPlaying = false;
+    private GreenfootSound bgm = new GreenfootSound("The Fantastic Tales from Tono.mp3");
+    public StartMenu(){    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
-        prepare();
+        addObject(new StartButton(), getWidth()/2, getHeight()/2);
     }
-
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
-    {
-        StartButton startButton = new StartButton();
-        addObject(startButton,305,216);
-        startButton.setLocation(316,291);
+    
+    public void act(){
+        if(isMusicPlaying) return;
+        bgm.playLoop();
+        isMusicPlaying = true;
+    }
+    public void stopMusic(){
+        bgm.stop();
     }
 }

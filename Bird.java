@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bird extends Actor{
     //General Attribute
-    private int speed = 5;
+    private int speed = 3;
     private Status status;
     private World world;
     private boolean isEnergyWorld;
@@ -20,7 +20,7 @@ public class Bird extends Actor{
     
     //Fly related
     private int flyCounter = 0;
-    private final int FLY_THRESHOLD = 8;
+    private int flyThreshold = 8;
     
     //Animation related
     private GreenfootImage[][] sprites;
@@ -35,6 +35,9 @@ public class Bird extends Actor{
         this.world = world;
         this.status = status;
         this.isEnergyWorld = isEnergyWorld;
+        if(isEnergyWorld){
+            flyThreshold *= 2;
+        }
         prepareImage();
     }
     
@@ -44,6 +47,11 @@ public class Bird extends Actor{
         if(status.isLose()){
             setImage(new GreenfootImage("gameover.png"));
             setLocation(world.getWidth()/2, world.getHeight()/2);
+            return;
+        }
+        if(status.isWin()){
+            setImage(new GreenfootImage("youwin.png"));
+            setLocation(world.getWidth()/2, world.getHeight()/2 + 30);
             return;
         }
         movement();
@@ -77,7 +85,7 @@ public class Bird extends Actor{
             flyCounter++;
         }
         
-        if(flyCounter >= FLY_THRESHOLD){
+        if(flyCounter >= flyThreshold){
             status.decreaseEnergy();
             flyCounter = 0;
         }

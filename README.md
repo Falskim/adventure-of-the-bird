@@ -66,8 +66,9 @@ kembali ke sarang untuk memberi makan ketiga anaknya
 - [x] Basic Mechanism (Spawn, Movement, Collision)
 - [x] Score, Health, Energy
 - [x] Background Music (Special Thanks to ZUN for Touhou Music)
-- [ ] Spite and Animation
+- [x] Spite and Animation
 - [ ] Sound Effect
-- [ ] Win and Lose Condition
+- [x] Win and Lose Condition
 - [x] Map Layout
+- [ ] Start Menu Title Screen
 - [ ] Difficulty (?) 

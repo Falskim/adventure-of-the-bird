@@ -31,9 +31,9 @@ public class Energy extends Actor{
             energy = energy4;
         
         container = new GreenfootImage("/energy/energycontainer.png");
-        for(int i = 0 ; i < energyAmount/10 ; i++){
+        for(int i = 0 ; i < energyAmount/5 ; i++){
             container.drawImage(energy, x , y);
-            x += 8;
+            x += 4;
         }
         setImage(container);
     }    

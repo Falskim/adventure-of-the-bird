@@ -13,6 +13,7 @@ public class Status extends Actor
     private int lives;
     private int energy;
     private int wormEaten;
+    private final int WORM_REQUIRED = 9;
     private boolean hasFirstDisplayed = false;
     private Lives live = new Lives();
     private Energy energyBar = new Energy();
@@ -22,11 +23,13 @@ public class Status extends Actor
         lives = 6;
         energy = 100;
         wormEaten = 0;
+        getImage().setTransparency(100);
     }
 
     public void display(){
         getWorld().showText("Score : " + score, 50, yPos);
         getWorld().showText("Energy : ", (getWorld().getWidth()/2) - 75, yPos);
+        getWorld().showText(energy + "%", (getWorld().getWidth()/2) + 30, yPos - 2);
         getWorld().showText("Lives : " , getWorld().getWidth() - 130, yPos);
         getWorld().showText("Worm Eaten : " + wormEaten, getWorld().getWidth()/2, 
             getWorld().getHeight() - yPos);
@@ -44,9 +47,12 @@ public class Status extends Actor
     }
 
     public boolean isLose(){
-        return lives <= 0;
+        return lives <= 0 || energy <= 0;
     }
-
+    
+    public boolean isWin(){
+        return wormEaten >= WORM_REQUIRED;
+    }
     /*
      * Score
      */

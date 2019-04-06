@@ -34,7 +34,7 @@ public class BirdWorld extends World
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //5
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //6
         {1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0}, //7
-        {1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, //8
+        {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, //8
         {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0}, //9
         {0, 0, 1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 1, 1, 0, 0}, //10
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //11
@@ -52,7 +52,8 @@ public class BirdWorld extends World
         this();
         this.status = status;
         spawner = new Spawner((World)this);
-        addObject(status, getWidth()/2, getHeight()/2);
+        status.getImage().scale(800, 40);
+        addObject(status, getWidth()/2, 20);
         firstSpawn();
     }
     

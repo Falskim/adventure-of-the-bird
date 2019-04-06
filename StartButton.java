@@ -10,9 +10,9 @@ public class StartButton extends Actor
 {
     private Status status = new Status();
     
-    public void act() 
-    {
+    public void act(){
         if(Greenfoot.mouseClicked(this)){
+            getWorldOfType(StartMenu.class).stopMusic();
             Greenfoot.setWorld(new EnergyWorld(status));
             //Greenfoot.setWorld(new BirdWorld(status));
         }
