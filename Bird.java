@@ -7,16 +7,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Bird extends Actor{
+    //General Attribute
     private int speed = 10;
-    private int xSpawnPosition;
-    private int ySpawnPosition;
     private Status status;
     private World world;
     private boolean isEnergyWorld;
-    private boolean hasSpawnPosition = false;
-    private final int FLY_THRESHOLD = 7;
-    private int flyCounter = 0;
     
+    //Spawn Related
+    private int xSpawnPosition;
+    private int ySpawnPosition;
+    private boolean hasSpawnPosition = false;
+    
+    //Fly related
+    private int flyCounter = 0;
+    private final int FLY_THRESHOLD = 7;
+    
+    public Bird(){
+    }
     public Bird(World world, Status status, boolean isEnergyWorld){
         this.world = world;
         this.status = status;
@@ -24,6 +31,7 @@ public class Bird extends Actor{
     }
     
     public void act(){
+        if(world == null) return;
         if(!hasSpawnPosition) setSpawnPosition();
         movement();
         checkCollision();

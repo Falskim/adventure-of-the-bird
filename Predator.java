@@ -8,21 +8,81 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Predator extends Actor
 {
+    //General Attribute
     public World world;
-    private Timer timer = new Timer();
-    private int turnDuration; //Toleransi timer, dalam miliseconds
+    private int turnDuration; //Toleransi turnTimer, dalam miliseconds
+    private int facing = 0; //0 = kanan, 1 = bawah, 2 = kiri, 3 = atas
+    private Timer turnTimer = new Timer();
     
+    //Collide Handler Related
+    private Timer colliderTimer = new Timer();
+    private int collideTimerThreshold = 750; //Batas glitch stuck ditembok
+    private int collideThreshold = 15; //Batas glitch stuck ditembok
+    private int collideCounter;
+    
+    //Spawn Related
+    private int xSpawnPosition;
+    private int ySpawnPosition;
+    private boolean hasSpawnPosition = false;
+    
+    //Animation related
+    public GreenfootImage[][] sprites;
+    private Timer animation = new Timer();
+    private int animationDelay = 250;
+    private int spriteCounter;
+    
+    public Predator(){
+    }
     public Predator(World world, int turnDuration){
         this.world = world;
         this.turnDuration = turnDuration;
-        timer.markTimer();
+        turnTimer.markTimer();
+        colliderTimer.markTimer();
+        animation.markTimer();
     }
     
     public void behaviour(int speed){
-        move(speed);
-        if(isCollide() || timer.getTimer() > turnDuration){
+        if(world == null) return;
+        if(!hasSpawnPosition) setSpawnPosition();
+        movement(speed);
+        if(isCollide() || turnTimer.getTimer() > turnDuration){
             changeDirection();
-            timer.markTimer();
+            if(colliderTimer.getTimer() > collideTimerThreshold){
+                colliderTimer.markTimer();
+                collideCounter = 0;
+            }
+            collideCounter++;
+            turnTimer.markTimer();
+        }
+        if(collideCounter > collideThreshold || isTouching(Bird.class)){
+            respawn();
+        }
+        animate();
+    }
+    
+    private void setSpawnPosition(){
+        xSpawnPosition = getX();
+        ySpawnPosition = getY();
+        hasSpawnPosition = true;
+    }
+    
+    private void respawn(){
+        setLocation(xSpawnPosition, ySpawnPosition);
+    }
+    public void movement(int speed){
+        switch(facing){
+            case 0:
+                setLocation(getX() + speed, getY());
+                break;
+            case 1:
+                setLocation(getX(), getY() + speed);
+                break;
+            case 2:
+                setLocation(getX() - speed, getY());
+                break;
+            case 3:
+                setLocation(getX(), getY() - speed);
+                break;
         }
     }
     
@@ -31,28 +91,36 @@ public class Predator extends Actor
     }
     
     private void changeDirection(){
-        int currentRotation = getRotation();
-        int newRotation = 90 * Greenfoot.getRandomNumber(4);
-        int relocationRange = (getImage().getWidth() + getImage().getWidth())/2;
-        while(newRotation == currentRotation){
-            newRotation = 90 * Greenfoot.getRandomNumber(4);
-        }
-        switch(currentRotation){
+        int currentFacing = facing;
+        int relocationRange = 30;
+        int newRotation;
+        do{
+            facing = Greenfoot.getRandomNumber(4);
+        }while(currentFacing == facing);
+        
+        //Menghindari agar tidak stuck di tembok
+        switch(currentFacing){
             case 0:
                 setLocation(getX()-relocationRange, getY());
-                getImage().mirrorVertically();
                 break;
-            case 90:
+            case 1:
                 setLocation(getX(), getY()-relocationRange);
                 break;
-            case 180:
+            case 2:
                 setLocation(getX()+relocationRange, getY());
-                getImage().mirrorVertically();
                 break;
-            case 270:
+            case 3:
                 setLocation(getX(), getY()+relocationRange);
-                break;
         }
-        setRotation(newRotation);
+    }
+    private void animate(){
+        if(animation.getTimer() >= animationDelay){
+            spriteCounter++;
+            if(spriteCounter >= sprites[0].length){
+                spriteCounter = 0;
+            }
+            this.setImage(sprites[facing][spriteCounter]);
+            animation.markTimer();
+        }
     }
 }

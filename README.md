@@ -30,4 +30,12 @@ kembali ke sarang untuk memberi makan ketiga anaknya
 
 ## Status
 
-***Belum Selesai***
+- [x] Main Actor
+- [x] Basic Mechanism (Spawn, Movement, Eat)
+- [x] Score, Health, Energy (Text Based)
+- [x] Background Music (Special Thanks to ZUN for Touhou Music)
+- [ ] Spite and Animation
+- [ ] Sound Effect
+- [ ] Win and Lose Condition
+- [ ] Map Layout
+- [ ] Difficulty (?) 

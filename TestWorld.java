@@ -1,21 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
 
 /**
- * Write a description of class EnergyWorld here.
+ * Write a description of class TestWorld here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class EnergyWorld extends World
-{
-    private Status status;
-    private Timer timer = new Timer();
-    private final int MAX_FOOD = 3;
-    private final int MAX_ENEMY = 3;
-    private Spawner spawner;
-    private final GreenfootSound bgm = 
-                    new GreenfootSound("Lullaby of Deserted Hell.mp3");
+public class TestWorld extends World{
     /*
      * Ukuran dunia 600 x 600, dan ukuran Wall 50, sehingga
      * 600/50 = 12 baris dan kolom
@@ -34,21 +25,11 @@ public class EnergyWorld extends World
                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}; //12
                      //1  2  3  4  5  6  7  8  9 10 11 12
     
-    public EnergyWorld(){    
+    public TestWorld()
+    {    
         super(600, 600, 1);
-        if(status == null) status = new Status();
-    }
-    
-    public EnergyWorld(Status status){
-        this();
-        this.status = status;
-        spawner = new Spawner((World)this);
-        addObject(status, getWidth()/2, getHeight()/2);
         createWallLayout();
-        firstSpawn();
-        bgm.playLoop();
     }
-    
     private void createWallLayout(){
         final int WALL_SIZE = 50;
         int xPos;
@@ -63,28 +44,5 @@ public class EnergyWorld extends World
             }
             yPos += WALL_SIZE;
         }
-    }
-    
-    public void act(){
-        status.display();
-    }
-
-    private void firstSpawn(){
-        //Spawning food
-        for(int i = 0 ; i < MAX_FOOD ; i++){
-            spawner.spawnApple();
-            spawner.spawnBanana();
-            spawner.spawnPapaya();
-        }
-        //Spawning enemy
-        for(int i = 0 ; i < MAX_ENEMY ; i++){
-            spawner.spawnSnake();
-            spawner.spawnCat();
-        }
-        spawner.spawnBird(status, true);
-    }
-    
-    public void stopMusic(){
-        bgm.stop();
     }
 }

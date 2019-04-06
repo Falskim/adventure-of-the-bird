@@ -24,5 +24,6 @@ public class StartMenu extends World
     {
         StartButton startButton = new StartButton();
         addObject(startButton,305,216);
+        startButton.setLocation(316,291);
     }
 }
