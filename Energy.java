@@ -7,10 +7,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Energy extends Actor{
-    private GreenfootImage energy1 = new GreenfootImage("energy1.png");
-    private GreenfootImage energy2 = new GreenfootImage("energy2.png");
-    private GreenfootImage energy3 = new GreenfootImage("energy3.png");
-    private GreenfootImage energy4 = new GreenfootImage("energy4.png");
+    private GreenfootImage energy1 = new GreenfootImage("/energy/energy1.png");
+    private GreenfootImage energy2 = new GreenfootImage("/energy/energy2.png");
+    private GreenfootImage energy3 = new GreenfootImage("/energy/energy3.png");
+    private GreenfootImage energy4 = new GreenfootImage("/energy/energy4.png");
     private GreenfootImage energy;
     private GreenfootImage container;
     public void act() 
@@ -30,7 +30,7 @@ public class Energy extends Actor{
         else
             energy = energy4;
         
-        container = new GreenfootImage("energycontainer.png");
+        container = new GreenfootImage("/energy/energycontainer.png");
         for(int i = 0 ; i < energyAmount/10 ; i++){
             container.drawImage(energy, x , y);
             x += 8;

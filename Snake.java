@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Snake extends Predator{
     private static final int SPEED = 3;
     private static final int TURN_DURATION = 1000;
-    private static final int TOTAL_SPRITE = 1;
+    private static final int TOTAL_SPRITE = 4;
    
     public Snake(){
     }
@@ -32,17 +32,17 @@ public class Snake extends Predator{
                     facing = "right";
                     break;
                 case 1:
-                    facing = "right";
+                    facing = "down";
                     break;
                 case 2:
                     facing = "left";
                     break;
                 default:
-                facing = "left";
+                    facing = "up";
             }
-            //for(int j = 0 ; j < 2 ; j++){
-                sprites[i][0] = new GreenfootImage("snake" + facing + ".png");
-            //}
+            for(int j = 0 ; j < TOTAL_SPRITE ; j++){
+                sprites[i][j] = new GreenfootImage("/snake/snake" + facing + (j+1) + ".png");
+            }
         }
     }
 }

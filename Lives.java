@@ -8,8 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Lives extends Actor
 {
-    private GreenfootImage full = new GreenfootImage("heartfull.png");
-    private GreenfootImage half = new GreenfootImage("hearthalf.png");
+    private GreenfootImage full = new GreenfootImage("/lives/heartfull.png");
+    private GreenfootImage half = new GreenfootImage("/lives/hearthalf.png");
     private GreenfootImage container;
     
     public Lives(){
@@ -17,7 +17,7 @@ public class Lives extends Actor
     public void updateLives(int lives){
         int x = 13;
         int y = 3;
-        container = new GreenfootImage("livescontainer.png");
+        container = new GreenfootImage("/lives/livescontainer.png");
         for(int i = 0 ; i < lives/2 ; i++){
             container.drawImage(full, x , y);
             x += 25;
