@@ -9,13 +9,12 @@ import java.util.List;
  */
 public class EnergyWorld extends World
 {
-    private Status status;
+    public Status status;
     private Timer timer = new Timer();
-    private final static int MAX_FOOD = 3;
-    private final static int MAX_ENEMY = 3;
+    private int MAX_FOOD = 3;
+    private int MAX_ENEMY = 3;
     private Spawner spawner;
-    private final static GreenfootSound bgm = 
-                    new GreenfootSound("Lullaby of Deserted Hell.mp3");
+    private GreenfootSound bgm;
     private boolean hasStatusDisplayed = false;
     /*
      * Ukuran dunia 600 x 600, dan ukuran Wall 50, sehingga
@@ -51,17 +50,24 @@ public class EnergyWorld extends World
     public EnergyWorld(){    
         super(600, 600, 1);
         createWallLayout();
-        bgm.playLoop();
         if(status == null) status = new Status();
     }
     
     public EnergyWorld(Status status){
         this();
         this.status = status;
+        if(status.isDarksoulMode){
+            bgm = new GreenfootSound("Lunatic Full Moon.mp3");
+            MAX_ENEMY *= 2;
+            MAX_FOOD--;
+        }else{
+            bgm = new GreenfootSound("Lullaby of Deserted Hell.mp3");
+        }
         spawner = new Spawner((World)this);
         status.getImage().scale(600, 40);
         addObject(status, getWidth()/2, 20);
         firstSpawn();
+        bgm.playLoop();
     }
     
     public void act(){

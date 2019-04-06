@@ -10,12 +10,11 @@ import java.util.List;
 public class BirdWorld extends World
 {
     private Timer timer = new Timer();
-    private final int MAX_FOOD = 1;
-    private final int MAX_ENEMY = 3;
-    private Status status;
+    private int MAX_FOOD = 2;
+    private int MAX_ENEMY = 3;
+    public Status status;
     private Spawner spawner;
-    private final GreenfootSound bgm = 
-                    new GreenfootSound("The Doll Maker of Bucharest.mp3");
+    private GreenfootSound bgm;
     private boolean hasStatusDisplayed = false;
     /*
      * Ukuran dunia 800 x 600, dan ukuran Wall 50, sehingga
@@ -44,17 +43,24 @@ public class BirdWorld extends World
     public BirdWorld(){
         super(800, 600, 1);
         createWallLayout();
-        bgm.playLoop();
         if(status == null) status = new Status();
     }
     
     public BirdWorld(Status status){
         this();
         this.status = status;
+        if(status.isDarksoulMode){
+            bgm = new GreenfootSound("Legacy of Lunatic Kingdom - Clownpiece Theme.mp3");
+            MAX_ENEMY *= 2;
+            MAX_FOOD--;
+        }else{
+            bgm = new GreenfootSound("The Doll Maker of Bucharest.mp3");
+        }
         spawner = new Spawner((World)this);
         status.getImage().scale(800, 40);
         addObject(status, getWidth()/2, 20);
         firstSpawn();
+        bgm.playLoop();
     }
     
     public void act(){

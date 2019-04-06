@@ -12,45 +12,54 @@ public class Bird extends Actor{
     private Status status;
     private World world;
     private boolean isEnergyWorld;
-    
+    private GreenfootImage lose;
+    private GreenfootImage win;
     //Spawn Related
     private int xSpawnPosition;
     private int ySpawnPosition;
     private boolean hasSpawnPosition = false;
-    
+
     //Fly related
     private int flyCounter = 0;
     private int flyThreshold = 8;
-    
+
     //Animation related
     private GreenfootImage[][] sprites;
     private Timer animation = new Timer();
     private int animationDelay = 100;
     private int spriteCounter;
     private int facing = 0; //0 = kanan, 1 = kiri
-    
+
+    //DarksoulMode
+    private boolean isSoundPlayed = false;
+    private int opaque = 0;
+
     public Bird(){
     }
+
     public Bird(World world, Status status, boolean isEnergyWorld){
         this.world = world;
         this.status = status;
         this.isEnergyWorld = isEnergyWorld;
-        if(isEnergyWorld){
+        if(isEnergyWorld && !status.isDarksoulMode){
             flyThreshold *= 3;
         }
         prepareImage();
     }
-    
+
     public void act(){
         if(world == null) return;
         if(!hasSpawnPosition) setSpawnPosition();
         if(status.isLose()){
-            setImage(new GreenfootImage("gameover.png"));
+            if(status.isDarksoulMode){
+                darksoulLose();
+            }
+            setImage(lose);
             setLocation(world.getWidth()/2, world.getHeight()/2);
             return;
         }
         if(status.isWin()){
-            setImage(new GreenfootImage("youwin.png"));
+            setImage(win);
             setLocation(world.getWidth()/2, world.getHeight()/2 + 30);
             return;
         }
@@ -58,13 +67,24 @@ public class Bird extends Actor{
         animate();
         checkCollision();
     }
-    
+
+    private void darksoulLose(){
+        if(!isSoundPlayed){
+            getImage().setTransparency(0);
+            new GreenfootSound("Darksoul You Died.mp3").play();
+            isSoundPlayed = true;
+        }
+        if(opaque < 255) opaque++;
+        getImage().scale(world.getWidth(), getImage().getHeight());
+        getImage().setTransparency(opaque);
+    }
+
     private void setSpawnPosition(){
         xSpawnPosition = getX();
         ySpawnPosition = getY();
         hasSpawnPosition = true;
     }
-    
+
     private void movement(){
         if(Greenfoot.isKeyDown("A")){
             this.setLocation(getX()-speed, getY());
@@ -84,7 +104,7 @@ public class Bird extends Actor{
             this.setLocation(getX(), getY()+speed);
             flyCounter++;
         }
-        
+
         if(flyCounter >= flyThreshold){
             status.decreaseEnergy();
             flyCounter = 0;
@@ -97,11 +117,11 @@ public class Bird extends Actor{
         for(int i = 0; i < 2 ; i++){
             switch(i){
                 case 0:
-                    facing = "right";
-                    break;
+                facing = "right";
+                break;
                 default:
-                    facing = "left";
-                    break;
+                facing = "left";
+                break;
             }
             for(int j = 0 ; j < 5 ; j++){
                 sprites[i][j] = new GreenfootImage("/bird/bird" + facing + (j+1) + ".png");
@@ -110,8 +130,15 @@ public class Bird extends Actor{
                 sprites[i][j] = new GreenfootImage("/bird/bird" + facing + (9-j) + ".png");
             }
         }
+        if(status.isDarksoulMode){
+            lose = new GreenfootImage("youdied.png");
+            speed++;
+        }else{
+            lose = new GreenfootImage("gameover.png");
+        }
+        win = new GreenfootImage("youwin.png");
     }
-    
+
     private void animate(){
         if(animation.getTimer() >= animationDelay){
             spriteCounter++;
@@ -122,7 +149,7 @@ public class Bird extends Actor{
             animation.markTimer();
         }
     }
-    
+
     private void changeWorld(){
         if(isEnergyWorld){
             ((EnergyWorld)world).stopMusic();
@@ -134,7 +161,7 @@ public class Bird extends Actor{
             return;
         }
     }
-    
+
     private void checkCollision(){
         Food food = (Food)getOneIntersectingObject(Food.class);
         Predator predator = (Predator)getOneIntersectingObject(Predator.class);
@@ -156,7 +183,7 @@ public class Bird extends Actor{
             changeWorld();
         }
     }
-    
+
     private void respawn(){
         setLocation(xSpawnPosition, ySpawnPosition);
     }

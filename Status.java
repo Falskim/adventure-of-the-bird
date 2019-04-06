@@ -19,6 +19,7 @@ public class Status extends Actor
     private boolean hasFirstDisplayed = false;
     private Lives live = new Lives();
     private Energy energyBar = new Energy();
+    public boolean isDarksoulMode = false;
     
     public Status(){
         score = 0;
@@ -27,7 +28,10 @@ public class Status extends Actor
         wormEaten = 0;
         getImage().setTransparency(100);
     }
-
+    public Status(boolean isDarksoulMode){
+        this();
+        this.isDarksoulMode = isDarksoulMode;
+    }
     public void display(){
         getWorld().showText("Score : " + score, 50, yPos);
         getWorld().showText("Energy : ", (getWorld().getWidth()/2) - 75, yPos);
@@ -38,6 +42,9 @@ public class Status extends Actor
         if(!hasFirstDisplayed){
             firstDisplay();
             hasFirstDisplayed = true;
+        }
+        if(isDarksoulMode){
+            getWorld().showText("DARK SOUL MODE", 100, getWorld().getHeight() - yPos);
         }
     }
 

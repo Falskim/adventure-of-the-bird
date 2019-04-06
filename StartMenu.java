@@ -9,18 +9,40 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class StartMenu extends World
 {
     private boolean isMusicPlaying = false;
-    private GreenfootSound bgm = new GreenfootSound("The Fantastic Tales from Tono.mp3");
+    private GreenfootSound bgm;
+
+    //Dark Soul Mode
+    private boolean DARK_SOUL_MODE = true;
+    private Timer darksoulButtonTimer = new Timer();
+    private DarksoulButton button;
+    
+    private int opaque = 0;
     public StartMenu(){    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
         addObject(new StartButton(), getWidth()/2, getHeight()/2);
+        if(DARK_SOUL_MODE){
+            bgm = new GreenfootSound("Kagome Kagome.mp3");
+            button = new DarksoulButton();
+            addObject(button,  getWidth()/2, getHeight()/2 + 100);
+            button.getImage().setTransparency(0);
+            darksoulButtonTimer.markTimer();
+        }else{
+            bgm = new GreenfootSound("The Fantastic Tales from Tono.mp3");
+        }
     }
-    
+
     public void act(){
-        if(isMusicPlaying) return;
-        bgm.playLoop();
-        isMusicPlaying = true;
+        if(!isMusicPlaying){
+            bgm.playLoop();
+            isMusicPlaying = true;
+        }
+        if(darksoulButtonTimer.getTimer() >= 10000){
+            if(opaque < 255) opaque++;
+            button.getImage().setTransparency(opaque);
+        }
     }
+
     public void stopMusic(){
         bgm.stop();
     }

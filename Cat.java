@@ -7,9 +7,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Cat extends Predator{
-    private static final int SPEED = 3;
     private static final int TURN_DURATION = 1500;
     private static final int TOTAL_SPRITE = 3;
+    private int SPEED = 3;
     
     public Cat(){
     }
@@ -17,6 +17,13 @@ public class Cat extends Predator{
     public Cat(World world){
         super(world, TURN_DURATION);
         prepareImage();
+        try{
+            if(((BirdWorld)world).status.isDarksoulMode){
+                SPEED++;
+            }
+        }catch(ClassCastException e){
+            //Nothing to do here lol
+        }
     }
 
     public void act(){
