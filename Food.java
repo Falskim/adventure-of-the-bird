@@ -8,6 +8,8 @@ public class Food extends Actor{
     public int energyValue;
     public int respawnDelay;
     private boolean isWorm = false;
+    public GreenfootSound playerSound = new GreenfootSound("slurp.wav");
+    public GreenfootSound predatorSound = new GreenfootSound("eat.wav");
     
     public Food(){
     }
@@ -43,10 +45,12 @@ public class Food extends Actor{
         if(isTouching(Bird.class)){
             randomLocation();
             timer.markTimer();
+            playerSound.play();
         }
         if(isTouching(Snake.class)){
             randomLocation();
             timer.markTimer();
+            predatorSound.play();
         }
     }
     

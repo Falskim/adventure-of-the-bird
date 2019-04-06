@@ -15,6 +15,7 @@ public class Worm extends Food
     }
     public Worm(World world){
         super(world, ENERGY, RESPAWN_DELAY);
+        playerSound = new GreenfootSound("worm.mp3");
     }
     public void act(){
         behavior();

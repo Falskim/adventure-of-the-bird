@@ -15,7 +15,8 @@ public class Bird extends Actor{
     private GreenfootImage lose;
     private GreenfootImage win;
     private boolean hasEnd = false;
-
+    private GreenfootSound wallSound = new GreenfootSound("wall.mp3");
+    
     //Spawn Related
     private int xSpawnPosition;
     private int ySpawnPosition;
@@ -186,10 +187,12 @@ public class Bird extends Actor{
         }
         if(predator != null){
             predator.respawn();
+            predator.playSound();
             respawn();
             status.decreaseLives(2);
         }
         if(isTouching(Wall.class)){
+            wallSound.play();
             respawn();
             status.decreaseLives(1);
         }

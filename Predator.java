@@ -13,6 +13,7 @@ public class Predator extends Actor
     private int turnDuration; //Toleransi turnTimer, dalam miliseconds
     private int facing = 0; //0 = kanan, 1 = bawah, 2 = kiri, 3 = atas
     private Timer turnTimer = new Timer();
+    private GreenfootSound sound;
     
     //Collide Handler Related
     private Timer colliderTimer = new Timer();
@@ -33,9 +34,10 @@ public class Predator extends Actor
     
     public Predator(){
     }
-    public Predator(World world, int turnDuration){
+    public Predator(World world, int turnDuration, GreenfootSound sound){
         this.world = world;
         this.turnDuration = turnDuration;
+        this.sound = sound;
         turnTimer.markTimer();
         colliderTimer.markTimer();
         animation.markTimer();
@@ -123,5 +125,9 @@ public class Predator extends Actor
             this.setImage(sprites[facing][spriteCounter]);
             animation.markTimer();
         }
+    }
+    
+    public void playSound(){
+        sound.play();
     }
 }

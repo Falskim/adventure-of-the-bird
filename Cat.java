@@ -15,7 +15,7 @@ public class Cat extends Predator{
     }
 
     public Cat(World world){
-        super(world, TURN_DURATION);
+        super(world, TURN_DURATION, new GreenfootSound("cat.wav"));
         prepareImage();
         try{
             if(((BirdWorld)world).status.isDarksoulMode){

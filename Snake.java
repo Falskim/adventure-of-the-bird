@@ -15,7 +15,7 @@ public class Snake extends Predator{
     }
     
 public Snake(World world){
-        super(world, TURN_DURATION);
+        super(world, TURN_DURATION, new GreenfootSound("snake.wav"));
         prepareImage();
         try{
             if(((EnergyWorld)world).status.isDarksoulMode){

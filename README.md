@@ -67,8 +67,8 @@ kembali ke sarang untuk memberi makan ketiga anaknya
 - [x] Score, Health, Energy
 - [x] Background Music (Special Thanks to ZUN for Touhou Music)
 - [x] Spite and Animation
-- [ ] Sound Effect
+- [x] Sound Effect
 - [x] Win and Lose Condition
 - [x] Map Layout
-- [ ] Start Menu Title Screen
+- [x] Start Menu Title Screen
 - [x] DarkSoul Mode (Hint : Just wait for it at StartMenu)
