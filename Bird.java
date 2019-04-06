@@ -14,6 +14,8 @@ public class Bird extends Actor{
     private boolean isEnergyWorld;
     private GreenfootImage lose;
     private GreenfootImage win;
+    private boolean hasEnd = false;
+
     //Spawn Related
     private int xSpawnPosition;
     private int ySpawnPosition;
@@ -48,39 +50,46 @@ public class Bird extends Actor{
     }
 
     public void act(){
-        if(world == null) return;
         if(!hasSpawnPosition) setSpawnPosition();
-        if(status.isLose()){
-            if(status.isDarksoulMode){
-                darksoulLose();
-                if(isEnergyWorld){
-                    ((EnergyWorld)world).stopMusic();
-                }else{
-                    ((BirdWorld)world).stopMusic();
-                }
-            }
-            setImage(lose);
-            setLocation(world.getWidth()/2, world.getHeight()/2);
-            return;
-        }
-        if(status.isWin()){
-            setImage(win);
-            setLocation(world.getWidth()/2, world.getHeight()/2 + 30);
+        if(hasEnd){
+            if(status.isWin())
+                win();
+            else
+                lose();
             return;
         }
         movement();
         animate();
         checkCollision();
+        if(status.isWin() || status.isLose()) hasEnd = true;
+    }
+
+    private void lose(){
+        setImage(lose);
+        setLocation(world.getWidth()/2, world.getHeight()/2);
+        if(status.isDarksoulMode){
+            darksoulLose();
+        }
+    }
+
+    private void win(){
+        setImage(win);
+        setLocation(world.getWidth()/2, world.getHeight()/2 + 30);
     }
 
     private void darksoulLose(){
+        if(isEnergyWorld){
+            ((EnergyWorld)world).stopMusic();
+        }else{
+            ((BirdWorld)world).stopMusic();
+        }
         if(!isSoundPlayed){
             getImage().setTransparency(0);
             new GreenfootSound("Darksoul You Died.mp3").play();
+            getImage().scale(world.getWidth(), getImage().getHeight());
             isSoundPlayed = true;
         }
         if(opaque < 255) opaque++;
-        getImage().scale(world.getWidth(), getImage().getHeight());
         getImage().setTransparency(opaque);
     }
 

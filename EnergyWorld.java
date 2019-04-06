@@ -10,11 +10,11 @@ import java.util.List;
 public class EnergyWorld extends World
 {
     public Status status;
+    private Spawner spawner;
+    private GreenfootSound bgm;
     private Timer timer = new Timer();
     private int MAX_FOOD = 3;
     private int MAX_ENEMY = 3;
-    private Spawner spawner;
-    private GreenfootSound bgm;
     private boolean hasStatusDisplayed = false;
     /*
      * Ukuran dunia 600 x 600, dan ukuran Wall 50, sehingga
@@ -72,10 +72,10 @@ public class EnergyWorld extends World
     
     public void act(){
         if(!hasStatusDisplayed){
+            status.setWorld(this);
             status.firstDisplay();
             hasStatusDisplayed = true;
         }
-        status.display();
     }
     private void createWallLayout(){
         final int WALL_SIZE = 30;

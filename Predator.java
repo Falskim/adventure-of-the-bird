@@ -42,10 +42,9 @@ public class Predator extends Actor
     }
     
     public void behaviour(int speed){
-        if(world == null) return;
         if(!hasSpawnPosition) setSpawnPosition();
         movement(speed);
-        if(isCollide() || turnTimer.getTimer() > turnDuration){
+        if(isColliding() || turnTimer.getTimer() > turnDuration){
             changeDirection();
             if(colliderTimer.getTimer() > collideTimerThreshold){
                 colliderTimer.markTimer();
@@ -69,6 +68,7 @@ public class Predator extends Actor
     public void respawn(){
         setLocation(xSpawnPosition, ySpawnPosition);
     }
+    
     public void movement(int speed){
         switch(facing){
             case 0:
@@ -86,7 +86,7 @@ public class Predator extends Actor
         }
     }
     
-    private boolean isCollide(){
+    private boolean isColliding(){
         return isAtEdge() || isTouching(Wall.class);
     }
     
@@ -113,6 +113,7 @@ public class Predator extends Actor
                 setLocation(getX(), getY()+relocationRange);
         }
     }
+    
     private void animate(){
         if(animation.getTimer() >= animationDelay){
             spriteCounter++;

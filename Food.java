@@ -21,7 +21,6 @@ public class Food extends Actor{
     }
     
     public void behavior(){
-        if(world == null) return;
         if(timer.getTimer() > respawnDelay){
             randomLocation();
             timer.markTimer();

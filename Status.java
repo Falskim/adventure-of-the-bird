@@ -6,19 +6,30 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Status extends Actor
-{
+public class Status extends Actor{
+    //General Attribute
     private final int yPos = 20;
+    private boolean hasFirstDisplayed = false;
+    private World world;
+    
+    //Score Related
     private int score;
     private int scoreLivesBonus;
+    private final int SCORE_FOR_LIVES = 50;
+    
+    //Lives Related
     private int lives;
+    private Lives live = new Lives();
+    
+    //Energy Related
     private int energy;
+    private Energy energyBar = new Energy();
+    
+    //Worm Related
     private int wormEaten;
     private final int WORM_REQUIRED = 9;
-    private final int SCORE_FOR_LIVES = 50;
-    private boolean hasFirstDisplayed = false;
-    private Lives live = new Lives();
-    private Energy energyBar = new Energy();
+    
+    //Darksoul Mode
     public boolean isDarksoulMode = false;
     
     public Status(){
@@ -32,27 +43,26 @@ public class Status extends Actor
         this();
         this.isDarksoulMode = isDarksoulMode;
     }
-    public void display(){
-        getWorld().showText("Score : " + score, 50, yPos);
-        getWorld().showText("Energy : ", (getWorld().getWidth()/2) - 75, yPos);
-        getWorld().showText(energy + "%", (getWorld().getWidth()/2) + 30, yPos - 2);
-        getWorld().showText("Lives : " , getWorld().getWidth() - 130, yPos);
-        getWorld().showText("Worm Eaten : " + wormEaten, getWorld().getWidth()/2, 
-            getWorld().getHeight() - yPos);
-        if(!hasFirstDisplayed){
-            firstDisplay();
-            hasFirstDisplayed = true;
-        }
-        if(isDarksoulMode){
-            getWorld().showText("DARK SOUL MODE", 100, getWorld().getHeight() - yPos);
-        }
+    
+    
+    public void setWorld(World world){
+        this.world = world;
     }
-
+    
     public void firstDisplay(){
-        getWorld().addObject(live, getWorld().getWidth() - 50, yPos);
-        getWorld().addObject(energyBar, (getWorld().getWidth()/2) + 30, yPos);
+        world.showText("Score : " + score, 50, yPos);
+        world.showText("Energy : ", (world.getWidth()/2) - 75, yPos);
+        world.showText(energy + "%", (world.getWidth()/2) + 30, yPos - 2);
+        world.addObject(energyBar, (world.getWidth()/2) + 30, yPos);
+        world.showText("Lives : " , world.getWidth() - 130, yPos);
+        world.addObject(live, world.getWidth() - 50, yPos);
+        world.showText("Worm Eaten : " + wormEaten, world.getWidth()/2, 
+            world.getHeight() - yPos);
         live.updateLives(lives);
         energyBar.updateEnergy(energy);
+        if(isDarksoulMode){
+            world.showText("DARK SOUL MODE", 100, world.getHeight() - yPos);
+        }
     }
 
     public boolean isLose(){
@@ -72,6 +82,7 @@ public class Status extends Actor
             scoreLivesBonus -= SCORE_FOR_LIVES;
             increaseLives(2);
         }
+        world.showText("Score : " + score, 50, yPos);
     }
     
     /*
@@ -101,6 +112,7 @@ public class Status extends Actor
     public void decreaseEnergy(){
         energy--;
         energyBar.updateEnergy(energy);
+        world.showText(energy + "%", (world.getWidth()/2) + 30, yPos - 2);
     }
 
     public int getEnergy(){
@@ -112,5 +124,7 @@ public class Status extends Actor
      */
     public void increaseWormEaten(){
         wormEaten++;
+        world.showText("Worm Eaten : " + wormEaten, world.getWidth()/2, 
+            world.getHeight() - yPos);
     }
 }

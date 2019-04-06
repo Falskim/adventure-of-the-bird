@@ -9,12 +9,12 @@ import java.util.List;
  */
 public class BirdWorld extends World
 {
-    private Timer timer = new Timer();
-    private int MAX_FOOD = 2;
-    private int MAX_ENEMY = 3;
     public Status status;
     private Spawner spawner;
     private GreenfootSound bgm;
+    private Timer timer = new Timer();
+    private int MAX_FOOD = 2;
+    private int MAX_ENEMY = 3;
     private boolean hasStatusDisplayed = false;
     /*
      * Ukuran dunia 800 x 600, dan ukuran Wall 50, sehingga
@@ -65,11 +65,12 @@ public class BirdWorld extends World
     
     public void act(){
         if(!hasStatusDisplayed){
+            status.setWorld(this);
             status.firstDisplay();
             hasStatusDisplayed = true;
         }
-        status.display();
     }
+    
     private void createWallLayout(){
         final int WALL_SIZE = 50;
         int xPos;
