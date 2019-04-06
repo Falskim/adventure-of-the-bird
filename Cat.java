@@ -41,8 +41,7 @@ public class Cat extends Predator{
                     facing = "up";
             }
             for(int j = 0 ; j < TOTAL_SPRITE ; j++){
-                sprites[i][j] = new GreenfootImage("cat" + facing + (j+1) 
-                    + ".png");
+                sprites[i][j] = new GreenfootImage("/cat/cat" + facing + (j+1) + ".png");
             }
         }
     }

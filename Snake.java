@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Snake extends Predator{
     private static final int SPEED = 3;
-    private static final int TURN_DURATION = 3000;
+    private static final int TURN_DURATION = 1000;
     private static final int TOTAL_SPRITE = 1;
    
     public Snake(){

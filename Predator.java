@@ -92,7 +92,7 @@ public class Predator extends Actor
     
     private void changeDirection(){
         int currentFacing = facing;
-        int relocationRange = 30;
+        int relocationRange = 5;
         int newRotation;
         do{
             facing = Greenfoot.getRandomNumber(4);
