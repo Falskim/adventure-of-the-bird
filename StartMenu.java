@@ -19,6 +19,7 @@ public class StartMenu extends World
     private boolean DARK_SOUL_MODE = true;
     private Timer darksoulButtonTimer = new Timer();
     private DarksoulButton button;
+    private boolean hasButtonDisplayed = false;
 
     private int opaque = 0;
     public StartMenu(){    
@@ -28,9 +29,6 @@ public class StartMenu extends World
         addObject(title, getWidth()/2, getHeight()/2 - 75);
         if(DARK_SOUL_MODE){
             bgm = new GreenfootSound("Kagome Kagome.mp3");
-            button = new DarksoulButton();
-            addObject(button,  getWidth()/2, getHeight()/2 + 145);
-            button.getImage().setTransparency(0);
             darksoulButtonTimer.markTimer();
         }else{
             bgm = new GreenfootSound("The Fantastic Tales from Tono.mp3");
@@ -50,6 +48,12 @@ public class StartMenu extends World
         if(title.getY() >= 150) speed *= -1;
         if(title.getY() <= 75) speed *= -1;
         if(darksoulButtonTimer.getTimer() >= 11000){
+            if(!hasButtonDisplayed){
+                button = new DarksoulButton();
+                addObject(button,  getWidth()/2, getHeight()/2 + 145);
+                button.getImage().setTransparency(0);
+                hasButtonDisplayed = true;
+            }
             if(opaque < 255) opaque++;
             button.getImage().setTransparency(opaque);
         }
